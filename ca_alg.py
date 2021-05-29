@@ -106,7 +106,7 @@ def ca(plane, surv, born):
             if currp[x][y] == 0 and nb > 0 and born[nb - 1] == 1:
                 nplane[x][y] = 1
                 insert(nset, plane, (x, y))
-
+            
             if currp[x][y] == 1:
                 nplane[x][y] = 1
                 insert(nset, plane, (x, y))
