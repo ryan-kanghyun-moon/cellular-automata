@@ -1,7 +1,7 @@
 import numpy as np
 import ui as ui
 
-nit = 300
+nit = 700
 
 def init_ca(p):
     #TODO
@@ -36,8 +36,23 @@ def init_ca(p):
     plane[l][l-1] = 1
     plane[l][l] = 1
     plane[l][l+1] = 1
+    # plane[l-1][l] = 1
+    plane[l+1][l] = 1
+
+    l +=  25
+    plane[l][l-1] = 1
+    plane[l][l] = 1
+    plane[l][l+1] = 1
+    plane[l-1][l] = 1
+    # plane[l+1][l] = 1
+
+    l +=  -40
+    # plane[l][l-1] = 1
+    plane[l][l] = 1
+    plane[l][l+1] = 1
     plane[l-1][l] = 1
     plane[l+1][l] = 1
+
 
 
 
@@ -69,7 +84,7 @@ def insert(s, plane, coord):
             for v in range(3):
                 y_coord = y + v - 1
                 
-                if y_coord >= 0 and y_coord < len(plane[0]):
+                if y_coord >= 0 and y_coord < len(plane[0]) and (y_coord != y or x_coord != x):
                     s.add((x_coord, y_coord))
     
     return s
@@ -110,9 +125,11 @@ def ca(plane, surv, born):
             if currp[x][y] == 1:
                 nplane[x][y] = 1
                 insert(nset, plane, (x, y))
+                # nset.add((x, y))
            
             if nb > 0 and surv[nb - 1] == 0:
                 nplane[x][y] = 0
+                insert(nset, plane, (x, y))
 
         ui.visualize(nplane)
         currp = nplane
