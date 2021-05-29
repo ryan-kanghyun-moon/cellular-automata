@@ -13,7 +13,7 @@ def get_born():
 
 def get_plane():
     #TODO
-    r = 50
+    r = 100
     return np.zeros((r, r))
 
 def visualize(plane):

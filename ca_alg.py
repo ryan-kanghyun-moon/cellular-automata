@@ -1,7 +1,7 @@
 import numpy as np
 import ui as ui
 
-nit = 300
+nit = 700
 
 def init_ca(p):
     #TODO
@@ -34,6 +34,20 @@ def init_ca(p):
     # cross in diffrent place
     l +=  15
     plane[l][l-1] = 1
+    plane[l][l] = 1
+    plane[l][l+1] = 1
+    plane[l-1][l] = 1
+    # plane[l+1][l] = 1
+
+    l +=  30
+    plane[l][l-1] = 1
+    plane[l][l] = 1
+    plane[l][l+1] = 1
+    # plane[l-1][l] = 1
+    plane[l+1][l] = 1
+    
+    l +=  -60
+    # plane[l][l-1] = 1
     plane[l][l] = 1
     plane[l][l+1] = 1
     plane[l-1][l] = 1
