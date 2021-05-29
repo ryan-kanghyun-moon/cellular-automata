@@ -1,7 +1,7 @@
 import numpy as np
 import ui as ui
 
-nit = 700
+nit = 250
 
 def init_ca(p):
     #TODO
@@ -84,7 +84,7 @@ def insert(s, plane, coord):
             for v in range(3):
                 y_coord = y + v - 1
                 
-                if y_coord >= 0 and y_coord < len(plane[0]) and (y_coord != y or x_coord != x):
+                if y_coord >= 0 and y_coord < len(plane[0]):
                     s.add((x_coord, y_coord))
     
     return s
@@ -96,6 +96,7 @@ def init_scan(plane):
         for y in range(len(plane[0])):
             if plane[x][y] == 1:
                 insert(s, plane, (x,y))
+                
     return s
 
 
@@ -115,27 +116,28 @@ def ca(plane, surv, born):
             y = coord[1]
 
             nb = cnt_nb(currp, x, y)
-                    # if not nb == 0:
-                    #     print("nb for " + str(x) + ", " + str(y) + ": " + str(nb) + "\n")
                 
             if currp[x][y] == 0 and nb > 0 and born[nb - 1] == 1:
                 nplane[x][y] = 1
                 insert(nset, plane, (x, y))
+              
             
-            if currp[x][y] == 1:
-                nplane[x][y] = 1
-                insert(nset, plane, (x, y))
-                # nset.add((x, y))
-           
-            if nb > 0 and surv[nb - 1] == 0:
+            elif currp[x][y] == 1 and nb > 0 and surv[nb - 1] == 0:
                 nplane[x][y] = 0
                 insert(nset, plane, (x, y))
+              
 
+            elif currp[x][y] == 1:
+                nplane[x][y] = 1
+                nset.add((x, y))
+           
+            
         ui.visualize(nplane)
         currp = nplane
         s = nset
 
     ui.visualize(currp)
+
 
 
 
