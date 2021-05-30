@@ -1,7 +1,7 @@
 import numpy as np
 import ui as ui
 
-nit = 700
+nit = 250
 
 def init_ca(p):
     #TODO
@@ -36,6 +36,20 @@ def init_ca(p):
     plane[l][l-1] = 1
     plane[l][l] = 1
     plane[l][l+1] = 1
+    # plane[l-1][l] = 1
+    plane[l+1][l] = 1
+
+    l +=  25
+    plane[l][l-1] = 1
+    plane[l][l] = 1
+    plane[l][l+1] = 1
+    plane[l-1][l] = 1
+    # plane[l+1][l] = 1
+
+    l +=  -40
+    # plane[l][l-1] = 1
+    plane[l][l] = 1
+    plane[l][l+1] = 1
     plane[l-1][l] = 1
     # plane[l+1][l] = 1
 
@@ -55,48 +69,89 @@ def init_ca(p):
 
 
 
+
     return plane
 
 def cnt_nb(plane, x, y):
     ret = 0
-    r = len(plane[0])
     for h in range(3):
         x_coord = x + h - 1
-        if x_coord >= 0 and x_coord < r:
+        if x_coord >= 0 and x_coord < len(plane):
             
             for v in range(3):
                 y_coord = y + v - 1
                 
-                if y_coord >= 0 and y_coord < r and (y_coord != y or x_coord != x):
+                if y_coord >= 0 and y_coord < len(plane[0]) and (y_coord != y or x_coord != x):
                     ret += int(plane[x_coord][y_coord])
     
     return ret
 
+
+def insert(s, plane, coord):
+    x = coord[0]
+    y = coord[1]
+    
+    for h in range(3):
+        x_coord = x + h - 1
+        if x_coord >= 0 and x_coord < len(plane):
+            
+            for v in range(3):
+                y_coord = y + v - 1
+                
+                if y_coord >= 0 and y_coord < len(plane[0]):
+                    s.add((x_coord, y_coord))
+    
+    return s
+
+
+def init_scan(plane):
+    s = set()
+    for x in range(len(plane)):
+        for y in range(len(plane[0])):
+            if plane[x][y] == 1:
+                insert(s, plane, (x,y))
+                
+    return s
+
+
 def ca(plane, surv, born):
-    l = len(plane[0])
     currp = plane
     ui.visualize(plane)
     
+    s = init_scan(plane)
+
     for i in range(nit):
+        
         nplane = ui.get_plane()
-        for x in range(l):
-            for y in range(l):
-                nb = cnt_nb(currp, x, y)
-                # if not nb == 0:
-                #     print("nb for " + str(x) + ", " + str(y) + ": " + str(nb) + "\n")
-            
-                if currp[x][y] == 0 and nb > 0 and born[nb - 1] == 1:
-                    nplane[x][y] = 1
+        nset = set()
+        
+        for coord in s:
+            x = coord[0]
+            y = coord[1]
 
-                if currp[x][y] == 1:
-                    nplane[x][y] = 1
+            nb = cnt_nb(currp, x, y)
                 
-                if nb > 0 and surv[nb - 1] == 0:
-                    nplane[x][y] = 0
+            if currp[x][y] == 0 and nb > 0 and born[nb - 1] == 1:
+                nplane[x][y] = 1
+                insert(nset, plane, (x, y))
+              
+            
+            elif currp[x][y] == 1 and nb > 0 and surv[nb - 1] == 0:
+                nplane[x][y] = 0
+                insert(nset, plane, (x, y))
+              
 
+            elif currp[x][y] == 1:
+                nplane[x][y] = 1
+                nset.add((x, y))
+           
+            
         ui.visualize(nplane)
         currp = nplane
+        s = nset
+
     ui.visualize(currp)
+
 
 
 

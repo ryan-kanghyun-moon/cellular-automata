@@ -19,15 +19,16 @@ def get_plane():
 def visualize(plane):
     # TODO
     ret = ""
-    r = len(plane[1])
+    xl = len(plane)
+    yl = len(plane[1])
     
-    for x in range(r):
-        for y in range(r):
+    for x in range(xl):
+        for y in range(yl):
             if plane[x,y] == 0:
-                ret += "X"
+                ret += "0"
             else:
                 ret += " "
             
-            if y == r - 1:
+            if y == yl - 1:
                 ret += '\n'
     print(ret)
