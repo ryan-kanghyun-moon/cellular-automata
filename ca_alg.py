@@ -1,7 +1,18 @@
 import numpy as np
 import ui as ui
+from random import random, seed
+nit = 200
+rand_p = 0.03
 
-nit = 250
+def randomize(plane):
+    x = len(plane)
+    y = len(plane[1])
+    seed(1)
+    for xi in range(x):
+        for yi in range(y):
+            if  random() < rand_p :
+                plane[xi][yi] = 1 
+    return plane
 
 def init_ca(p):
     #TODO
@@ -24,51 +35,52 @@ def init_ca(p):
     # plane[l-1][l] = 1
     # plane[l+1][l] = 1
 
-    # cross - one down
-    l = int(l/2)
-    plane[l][l-1] = 1
-    plane[l][l] = 1
-    plane[l][l+1] = 1
-    plane[l+1][l] = 1
-
-    # cross in diffrent place
-    l +=  15
-    plane[l][l-1] = 1
-    plane[l][l] = 1
-    plane[l][l+1] = 1
-    # plane[l-1][l] = 1
-    plane[l+1][l] = 1
-
-    l +=  25
-    plane[l][l-1] = 1
-    plane[l][l] = 1
-    plane[l][l+1] = 1
-    plane[l-1][l] = 1
-    # plane[l+1][l] = 1
-
-    l +=  -40
+    # # cross - one down
+    # l = int(l/2)
     # plane[l][l-1] = 1
-    plane[l][l] = 1
-    plane[l][l+1] = 1
-    plane[l-1][l] = 1
+    # plane[l][l] = 1
+    # plane[l][l+1] = 1
     # plane[l+1][l] = 1
 
-    l +=  30
-    plane[l][l-1] = 1
-    plane[l][l] = 1
-    plane[l][l+1] = 1
+    # # cross in diffrent place
+    # l +=  15
+    # plane[l][l-1] = 1
+    # plane[l][l] = 1
+    # plane[l][l+1] = 1
+    # # plane[l-1][l] = 1
+    # plane[l+1][l] = 1
+
+    # l +=  25
+    # plane[l][l-1] = 1
+    # plane[l][l] = 1
+    # plane[l][l+1] = 1
     # plane[l-1][l] = 1
-    plane[l+1][l] = 1
+    # # plane[l+1][l] = 1
+
+    # l +=  -30
+    # # plane[l][l-1] = 1
+    # plane[l][l] = 1
+    # plane[l][l+1] = 1
+    # plane[l-1][l] = 1
+    # # plane[l+1][l] = 1
+
+    # # l +=  20
+    # # plane[l][l-1] = 1
+    # # plane[l][l] = 1
+    # # plane[l][l+1] = 1
+    # # # plane[l-1][l] = 1
+    # # plane[l+1][l] = 1
     
-    l +=  -60
-    # plane[l][l-1] = 1
-    plane[l][l] = 1
-    plane[l][l+1] = 1
-    plane[l-1][l] = 1
-    plane[l+1][l] = 1
+    # l +=  -60
+    # # plane[l][l-1] = 1
+    # plane[l][l] = 1
+    # plane[l][l+1] = 1
+    # plane[l-1][l] = 1
+    # plane[l+1][l] = 1
 
+    
 
-
+    randomize(plane)
 
     return plane
 
@@ -131,12 +143,12 @@ def ca(plane, surv, born):
 
             nb = cnt_nb(currp, x, y)
                 
-            if currp[x][y] == 0 and nb > 0 and born[nb - 1] == 1:
+            if currp[x][y] == 0 and born[nb] == 1:
                 nplane[x][y] = 1
                 insert(nset, plane, (x, y))
               
             
-            elif currp[x][y] == 1 and nb > 0 and surv[nb - 1] == 0:
+            elif currp[x][y] == 1 and surv[nb] == 0:
                 nplane[x][y] = 0
                 insert(nset, plane, (x, y))
               
@@ -144,14 +156,11 @@ def ca(plane, surv, born):
             elif currp[x][y] == 1:
                 nplane[x][y] = 1
                 nset.add((x, y))
-           
             
         ui.visualize(nplane)
         currp = nplane
         s = nset
 
     ui.visualize(currp)
-
-
 
 
