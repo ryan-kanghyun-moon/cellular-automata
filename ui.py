@@ -1,20 +1,36 @@
 import numpy as np
-def get_surv():
-    # TODO
-    maze = [1, 1, 1, 1, 1, 0, 0, 0]
-    life = [0, 1, 1, 0, 0, 0, 0, 0]
-    return maze
+import ca_alg as alg
 
-def get_born():
+
+def show():
+   
+    surv, born = get_cond()
+    plane = get_plane()
+
+    alg.init_ca(plane)
+    alg.ca(plane, surv, born)
+
+
+def get_cond():
     # TODO
-    maze = [0, 0, 1, 0, 0, 0, 0, 0]
-    life = [0, 0, 1, 0, 0, 0, 0, 0]
-    return maze
+    maze_s = [0, 1, 1, 1, 1, 1, 0, 0, 0]
+    maze_b = [0, 0, 0, 1, 0, 0, 0, 0, 0]
+
+    mazectric_s = [0, 1, 1, 1, 1, 0, 0, 0, 0]
+    mazectric_b = [0, 0, 0, 1, 0, 0, 0, 0, 0]
+
+    life_s = [0, 0, 1, 1, 0, 0, 0, 0, 0]
+    life_b = [0, 0, 0, 1, 0, 0, 0, 0, 0]
+
+
+    return maze_s, maze_b
+
 
 def get_plane():
     #TODO
-    r = 100
-    return np.zeros((r, r))
+    x = 50
+    y = 80
+    return np.zeros((x, y))
 
 def visualize(plane):
     # TODO
@@ -25,9 +41,9 @@ def visualize(plane):
     for x in range(xl):
         for y in range(yl):
             if plane[x,y] == 0:
-                ret += "0"
+                ret += "X "
             else:
-                ret += " "
+                ret += "  "
             
             if y == yl - 1:
                 ret += '\n'
