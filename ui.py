@@ -29,7 +29,7 @@ def get_cond():
 def get_plane():
     #TODO
     x = 100
-    y = 150
+    y = 100
     return np.zeros((x, y))
 
 def visualize(plane):
