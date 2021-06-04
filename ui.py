@@ -41,9 +41,9 @@ def visualize(plane):
     for x in range(xl):
         for y in range(yl):
             if plane[x,y] == 0:
-                ret += "X "
+                ret += "X"
             else:
-                ret += "  "
+                ret += " "
             
             if y == yl - 1:
                 ret += '\n'

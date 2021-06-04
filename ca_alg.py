@@ -157,7 +157,7 @@ def ca(plane, surv, born):
                 nplane[x][y] = 1
                 nset.add((x, y))
             
-        ui.visualize(nplane)
+        # ui.visualize(nplane)
         currp = nplane
         s = nset
 
