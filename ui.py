@@ -28,8 +28,8 @@ def get_cond():
 
 def get_plane():
     #TODO
-    x = 70
-    y = 80
+    x = 100
+    y = 150
     return np.zeros((x, y))
 
 def visualize(plane):
@@ -41,9 +41,9 @@ def visualize(plane):
     for x in range(xl):
         for y in range(yl):
             if plane[x,y] == 0:
-                ret += "X "
+                ret += "X"
             else:
-                ret += "  "
+                ret += " "
             
             if y == yl - 1:
                 ret += '\n'

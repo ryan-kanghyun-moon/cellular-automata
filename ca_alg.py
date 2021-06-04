@@ -110,57 +110,67 @@ def insert(s, plane, coord):
             for v in range(3):
                 y_coord = y + v - 1
                 
-                if y_coord >= 0 and y_coord < len(plane[0]):
+                if y_coord >= 0 and y_coord < len(plane[0]) and (y_coord != y or x_coord != x):
                     s.add((x_coord, y_coord))
     
     return s
 
 
 def init_scan(plane):
-    s = set()
+    nb = set()
+    # on = set()
     for x in range(len(plane)):
         for y in range(len(plane[0])):
             if plane[x][y] == 1:
-                insert(s, plane, (x,y))
-                
-    return s
+                insert(nb, plane, (x,y))
+                # on.add((x,y))
+                nb.add((x,y))
+    return nb
+
+def render(plane, set):
+    for coord in set:
+        x = coord[0]
+        y = coord[1]
+        plane[x][y] = not plane[x][y]
 
 
 def ca(plane, surv, born):
-    currp = plane
+    p = plane
     ui.visualize(plane)
-    
-    s = init_scan(plane)
+   
+    nb_set = init_scan(plane)
 
     for i in range(nit):
+        new_nb = set()
+        changed = set()
         
-        nplane = ui.get_plane()
-        nset = set()
         
-        for coord in s:
+        for coord in nb_set:
             x = coord[0]
             y = coord[1]
 
-            nb = cnt_nb(currp, x, y)
+            nb = cnt_nb(p, x, y)
                 
-            if currp[x][y] == 0 and born[nb] == 1:
-                nplane[x][y] = 1
-                insert(nset, plane, (x, y))
+            if p[x][y] == 0 and born[nb] == 1:
+                changed.add((x,y))
+                insert(new_nb, p, (x, y))
               
             
-            elif currp[x][y] == 1 and surv[nb] == 0:
-                nplane[x][y] = 0
-                insert(nset, plane, (x, y))
+            elif p[x][y] == 1 and surv[nb] == 0:
+                changed.add((x,y))
+                insert(new_nb, plane, (x, y))
               
 
-            elif currp[x][y] == 1:
-                nplane[x][y] = 1
-                nset.add((x, y))
-            
-        ui.visualize(nplane)
-        currp = nplane
-        s = nset
+            # elif currp[x][y] == 1:
+            #     nplane[x][y] = 1
+            #     nset.add((x, y))
+        render(p, changed)
+        ui.visualize(p)
+        # currp = nplane
+        nb_set = new_nb
 
-    ui.visualize(currp)
+        
+
+    ui.visualize(p)
 
 
