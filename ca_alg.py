@@ -118,12 +118,10 @@ def insert(s, plane, coord):
 
 def init_scan(plane):
     nb = set()
-    # on = set()
     for x in range(len(plane)):
         for y in range(len(plane[0])):
             if plane[x][y] == 1:
                 insert(nb, plane, (x,y))
-                # on.add((x,y))
                 nb.add((x,y))
     return nb
 
@@ -159,14 +157,9 @@ def ca(plane, surv, born):
             elif p[x][y] == 1 and surv[nb] == 0:
                 changed.add((x,y))
                 insert(new_nb, plane, (x, y))
-              
-
-            # elif currp[x][y] == 1:
-            #     nplane[x][y] = 1
-            #     nset.add((x, y))
+          
         render(p, changed)
-        # ui.visualize(p)
-        # currp = nplane
+        ui.visualize(p)
         nb_set = new_nb
 
         
