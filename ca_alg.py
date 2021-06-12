@@ -14,12 +14,13 @@ def randomize(plane):
                 plane[xi][yi] = 1 
     return plane
 
+
 def init_ca(p):
     #TODO
     plane = p
 
     l = int(len(plane[1]))
-    
+    #comment new
    
     # # left straight
     # l /= 2
